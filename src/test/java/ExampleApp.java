@@ -1,3 +1,4 @@
+import com.github.queerzard.jproperties.JProperties;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
@@ -9,8 +10,9 @@ public class ExampleApp {
 
     @SneakyThrows
     public ExampleApp() {
-        ExampleConfig exampleConfig = new ExampleConfig();
-        exampleConfig.save();
+        JProperties jProperties = new JProperties();
+        jProperties.registerConfigurations("testpkg.with.configs");
+        jProperties.registerConfig(ExampleConfig.class);
     }
 
     public static void main(String[] args) {

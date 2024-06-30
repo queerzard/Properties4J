@@ -64,10 +64,9 @@ public class Utils {
             Class<?> clazz = obj.getClass();
             Field field = clazz.getDeclaredField(fieldName);
             field.setAccessible(true);
-            field.set(obj, (field.getType().cast(fieldValue)));
+            field.set(obj, convertValue(field.getType(), (fieldValue)));
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
-            // Handle the exception as needed, such as rethrowing or logging
         }
     }
 
@@ -159,6 +158,7 @@ public class Utils {
         try {
             object = new ObjectInputStream(new ByteArrayInputStream(data)).readObject();
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
         return object;
@@ -177,6 +177,57 @@ public class Utils {
         }
         return bytes;
     }
+
+    private static Object convertValue(Class<?> fieldType, Object value) {
+        if (value == null) {
+            return null;
+        }
+
+        if (fieldType.isAssignableFrom(value.getClass())) {
+            return value;
+        }
+
+        if (value instanceof String) {
+            String strValue = (String) value;
+            switch (fieldType.getSimpleName()) {
+                case "int":
+                case "Integer":
+                    return Integer.parseInt(strValue);
+                case "long":
+                case "Long":
+                    return Long.parseLong(strValue);
+                case "double":
+                case "Double":
+                    return Double.parseDouble(strValue);
+                case "boolean":
+                case "Boolean":
+                    return Boolean.parseBoolean(strValue);
+                case "float":
+                case "Float":
+                    return Float.parseFloat(strValue);
+                case "short":
+                case "Short":
+                    return Short.parseShort(strValue);
+                case "byte":
+                case "Byte":
+                    return Byte.parseByte(strValue);
+                case "char":
+                case "Character":
+                    if (strValue.length() == 1) {
+                        return strValue.charAt(0);
+                    } else {
+                        throw new IllegalArgumentException("Cannot convert string to char: " + strValue);
+                    }
+                case "String":
+                    return strValue;
+                default:
+                    throw new IllegalArgumentException("Unsupported type: " + fieldType.getSimpleName());
+            }
+        }
+
+        throw new IllegalArgumentException("Cannot convert value: " + value + " to type: " + fieldType.getSimpleName());
+    }
+
 
 
 }

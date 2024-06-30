@@ -7,8 +7,6 @@ import java.lang.reflect.Field;
 
 public interface IObserver {
 
-    <T extends PropertiesBase> boolean postPropertiesChanged(T propertiesObject, Field field, Object oldValue, Object newValue) throws NotSerializableException;
-
-    <T extends PropertiesBase> boolean prePropertiesChange(T propertiesObject, Field field, Object oldValue, Object newValue);
+    <T extends PropertiesBase> boolean onChange(T propertiesObject, Field field, Object oldValue, Object newValue) throws NotSerializableException;
 
 }

@@ -1,5 +1,6 @@
 import com.github.queerzard.jproperties.annotations.Ignore;
 import com.github.queerzard.jproperties.annotations.ObjB64;
+import com.github.queerzard.jproperties.annotations.Observe;
 import com.github.queerzard.jproperties.annotations.Properties;
 import com.github.queerzard.jproperties.config.PropertiesBase;
 import lombok.Getter;
@@ -9,10 +10,11 @@ import java.util.HashMap;
 
 
 @Properties
+@Observe
 public class ExampleConfig extends PropertiesBase {
 
     @Getter
-    private String foo = "true";
+    private boolean foo = true;
     @Getter
     @Ignore
     private String bar = "true";
@@ -21,8 +23,16 @@ public class ExampleConfig extends PropertiesBase {
     private HashMap<String, String> map;
 
 
-    public ExampleConfig() throws NotSerializableException {
-        postConstructHandover(this);
-        System.out.println(map.toString());
+    public ExampleConfig() {
+/*        this.map = new HashMap<>();
+        this.map.put("test", "value");
+        System.out.println(map);*/
+
+    }
+
+
+    @Override
+    public void postConstruct() throws NotSerializableException {
+
     }
 }

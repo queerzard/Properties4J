@@ -12,6 +12,9 @@ import java.util.HashMap;
 
 public abstract class PropertiesBase implements Cloneable, ISubInstanceHandover {
 
+
+    //fieldName=path.to.object.type(value)
+
     private PropertiesFile propertiesFile;
 
     private PropertiesBase propertiesBase;
@@ -25,9 +28,10 @@ public abstract class PropertiesBase implements Cloneable, ISubInstanceHandover 
     public <T extends PropertiesBase> void postConstructHandover(T subclass) throws NotSerializableException {
         this.propertiesBase = subclass;
         Properties subProp = propertiesBase.getClass().getAnnotation(Properties.class);
-        this.propertiesFile = new PropertiesFile(subProp.name().equalsIgnoreCase("{nameOfClass}") ? propertiesBase.getClass().getName() : subProp.name());
+        this.propertiesFile = new PropertiesFile(subProp.name().equalsIgnoreCase("{nameOfClass}") ? propertiesBase.getClass().getSimpleName() : subProp.name());
         checkFieldIntegrity();
         parse();
+        postConstruct();
     }
 
     private void checkFieldIntegrity() throws NotSerializableException {
@@ -49,7 +53,8 @@ public abstract class PropertiesBase implements Cloneable, ISubInstanceHandover 
             Utils.setFieldValue(this.propertiesBase, field.getName(), this.propertiesFile.existing(field.getName()) ?
                     (!AnnotationProcessor.isSerializable(field) ? this.propertiesFile.get(field.getName()) :
                             AnnotationProcessor.deserializeObject(field.getType(),
-                                    (String) this.propertiesFile.get(field.getName()))) : null);
+                                    ((String) this.propertiesFile.get(field.getName())))) : null);
+
         }
     }
 
@@ -69,9 +74,10 @@ public abstract class PropertiesBase implements Cloneable, ISubInstanceHandover 
         HashMap<String, String> keyValuePairs = new HashMap<>();
 
         for (Field field : propertiesBase.getFields(false)) {
+            String temp = "";
             String fieldName = field.getName();
             String value = String.valueOf(field.isAnnotationPresent(ObjB64.class) ?
-                    AnnotationProcessor.serializeObject(field, propertiesBase).getValue() : Utils.getFieldValue(field, propertiesBase));
+                    (temp = (String) AnnotationProcessor.serializeObject(field, propertiesBase).getValue()).substring(0, temp.length()) : Utils.getFieldValue(field, propertiesBase));
             keyValuePairs.put(fieldName, value);
         }
 

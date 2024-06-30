@@ -6,4 +6,6 @@ public interface ISubInstanceHandover {
 
     <T extends PropertiesBase> void postConstructHandover(T subclass) throws NotSerializableException;
 
+    void postConstruct() throws NotSerializableException;
+
 }
