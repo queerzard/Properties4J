@@ -11,7 +11,7 @@ public class PropertiesObserverWorker {
     private final PropertiesObserverWorker globalTask;
 
     @Getter
-    private ArrayList<AsyncPropertiesObserver> propertiesObservers;
+    private final ArrayList<AsyncPropertiesObserver> propertiesObservers;
 
     @Getter
     private boolean active = true;

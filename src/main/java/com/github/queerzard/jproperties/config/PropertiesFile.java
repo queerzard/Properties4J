@@ -14,11 +14,11 @@ import java.util.Properties;
  */
 public class PropertiesFile {
     @Getter
-    private String fileName;
+    private final String fileName;
     @Getter
-    private File file;
+    private final File file;
     @Getter
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
 
     public PropertiesFile(String fileName) {

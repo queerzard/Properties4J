@@ -15,16 +15,16 @@ import java.util.ArrayList;
 public class JProperties {
 
     @Getter
-    private ArrayList<Class<? extends PropertiesBase>> properties;
+    private final ArrayList<Class<? extends PropertiesBase>> properties;
     @Getter
-    private ArrayList<Class<? extends AsyncPropertiesObserver>> observers;
+    private final ArrayList<Class<? extends AsyncPropertiesObserver>> observers;
     @Getter
-    private ArrayList<PropertiesBase> propertiesBases;
+    private final ArrayList<PropertiesBase> propertiesBases;
 
     @Getter
-    private PropertiesObserverWorker propertiesObserverTask;
+    private final PropertiesObserverWorker propertiesObserverTask;
     @Getter
-    private Logger logger;
+    private final Logger logger;
     @Getter
     private static JProperties jProperties;
 

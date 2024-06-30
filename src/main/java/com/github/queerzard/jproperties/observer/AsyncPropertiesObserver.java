@@ -14,7 +14,7 @@ public abstract class AsyncPropertiesObserver implements IObserver {
 
 
     @Getter
-    private ArrayList<PropertiesBase> properties;
+    private final ArrayList<PropertiesBase> properties;
     @Getter
     private ArrayList<PropertiesState> cachedProperties = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public abstract class AsyncPropertiesObserver implements IObserver {
     }
 
     @Getter
-    private boolean active = true;
+    private final boolean active = true;
 
     public void observe() {
         new Thread(() -> {

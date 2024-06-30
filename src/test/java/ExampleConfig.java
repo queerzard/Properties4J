@@ -14,10 +14,10 @@ import java.util.HashMap;
 public class ExampleConfig extends PropertiesBase {
 
     @Getter
-    private boolean foo = true;
+    private final boolean foo = true;
     @Getter
     @Ignore
-    private String bar = "true";
+    private final String bar = "true";
     @Getter
     @ObjB64
     private HashMap<String, String> map;

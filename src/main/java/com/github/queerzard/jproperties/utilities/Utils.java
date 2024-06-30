@@ -10,6 +10,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -89,7 +90,7 @@ public class Utils {
     }
 
     public static byte[] encryptBytes(String password, byte[] plainBytes) throws Exception {
-        Key encryptionKey = new SecretKeySpec((password).getBytes("UTF-8"), "AES");
+        Key encryptionKey = new SecretKeySpec((password).getBytes(StandardCharsets.UTF_8), "AES");
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, encryptionKey);
         byte[] encryptedBytes = cipher.doFinal(plainBytes);
@@ -97,7 +98,7 @@ public class Utils {
     }
 
     public static byte[] decryptBytes(String password, byte[] encryptedBytes) throws Exception {
-        Key encryptionKey = new SecretKeySpec((password).getBytes("UTF-8"), "AES");
+        Key encryptionKey = new SecretKeySpec((password).getBytes(StandardCharsets.UTF_8), "AES");
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, encryptionKey);
         byte[] decryptedBytes = cipher.doFinal(encryptedBytes);

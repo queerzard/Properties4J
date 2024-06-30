@@ -8,11 +8,11 @@ import java.util.HashMap;
 public class PropertiesState {
 
     @Getter
-    private PropertiesBase copiedProperties;
+    private final PropertiesBase copiedProperties;
     @Getter
     private HashMap<String, String> keyVal;
     @Getter
-    private long time = System.currentTimeMillis();
+    private final long time = System.currentTimeMillis();
 
     public <T extends PropertiesBase> PropertiesState(T propertiesBase) throws CloneNotSupportedException, NotSerializableException {
         this.copiedProperties = (PropertiesBase) propertiesBase.clone();

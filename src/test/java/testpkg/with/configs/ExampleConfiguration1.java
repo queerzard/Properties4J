@@ -15,7 +15,7 @@ import java.io.NotSerializableException;
 public class ExampleConfiguration1 extends PropertiesBase {
 
     @Getter
-    private String dasIst = "ein Test";
+    private final String dasIst = "ein Test";
 
     public ExampleConfiguration1() throws NotSerializableException {
     }
